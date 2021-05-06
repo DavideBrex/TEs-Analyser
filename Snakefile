@@ -43,9 +43,9 @@ include: "rules/trimming.smk"
 
 ##### handle possible errors, clean temp folders #####
 onsuccess:
-    shell("""
-    rm -r fastq/
-    """)
+    # shell("""
+    # #rm -r /results/fastq/
+    # """)
     print("All done!\n")
 
 onerror:
