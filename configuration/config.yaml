@@ -6,7 +6,7 @@ samples: configuration/samples.tsv
 fastq_files: configuration/fastq_files.tsv
 
 #whether perform trimming or not
-trimming: true
+trimming: false
 
 #parameters for the tools used:
 
@@ -18,10 +18,20 @@ params:
 
 
 
-
+diffexp:
+  # Filter thresholds to call differentially expressed genes
+  pvalue: 0.05
+  log2fc: 1.5
+  # contrasts for the deseq2 results method
+  contrasts:
+    Control-vs-Treatment:
+      - Control
+      - Treatment
 
 tools_cpu:
   fastp_pe: 5
   fastp_se: 5
   STAR_first_pass: 10
   STAR_second_pass: 10
+
+

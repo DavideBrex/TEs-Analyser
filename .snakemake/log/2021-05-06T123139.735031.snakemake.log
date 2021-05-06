@@ -1,0 +1,3 @@
+NameError in line 21 of /shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TEs-Analyser/Snakefile:
+name 'SAMPLE' is not defined
+  File "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TEs-Analyser/Snakefile", line 21, in <module>

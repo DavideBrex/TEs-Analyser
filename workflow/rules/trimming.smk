@@ -3,7 +3,6 @@ def return_fastq_files(wildcars):
     return units.loc[(wildcards.sample, wildcards.lane), ["fq1", "fq2"]].dropna()
 
 
-
 rule link_to_fastq_se:
     input: 
         return_fastq_files
