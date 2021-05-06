@@ -8,7 +8,7 @@ rule align_first_pass:
         bam = "results/alignments/{sample}.bam",
         index = "results/alignments/{sample}.bam.bai"
     threads:
-        config["threads"]["align"]
+        config["tools_cpu"]["STAR_first_pass"]
     params:
         genome_index = config["ref"]["genome_index"]
         star_par=config["params"]["star_first_pass"]
@@ -19,5 +19,10 @@ rule align_first_pass:
     shell:
         """
         STAR --genomeDir {params.genome_index} --readFilesIn {input} \
-        --runThreadN {threads} {params.star_par}
+        --runThreadN {threads} --quantMode GeneCounts --readFilesCommand zcat \   
+        --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI AS NM MD  {params.star_par}
         """
+
+
+rule align_second_pass:
+    input: 

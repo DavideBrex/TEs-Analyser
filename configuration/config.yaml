@@ -1,3 +1,29 @@
+# Configuration file for TEs-Analyser #
+
+#file containing the sample information
+samples: configuration/samples.tsv
+
+#file containing the sample paths to rawa data
+
+fastq_files: configuration/fastq_files.tsv
+
+#whether perform trimming or not
+trimming: true
+
+#parameters for the tools used:
+
+params:
+  fastp:
+    se: "-t 1 -A -Q -L"
+    pe: "-t 1 -A -Q -L" 
+  star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 30 --outFilterMismatchNmax 999" 
 
 
-test
+
+
+
+tools_cpu:
+  fastp_pe: 5
+  fastp_se: 5
+  STAR_first_pass: 10
+  STAR_second_pass: 10
