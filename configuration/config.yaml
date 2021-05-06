@@ -20,7 +20,7 @@ params:
 
 diffexp:
   # Filter thresholds to call differentially expressed genes
-  pvalue: 0.05
+  pval: 0.05
   log2fc: 1.5
   # contrasts for the deseq2 results method
   contrasts:

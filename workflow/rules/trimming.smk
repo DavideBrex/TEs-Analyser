@@ -1,9 +1,10 @@
 
 def return_fastq_files(wildcars):
-    return units.loc[(wildcards.sample, wildcards.lane), ["fq1", "fq2"]].dropna()
+    return FASTQ_FILES.loc[(wildcards.sample, wildcards.lane), ["fq1", "fq2"]].dropna()
 
 
-rule link_to_fastq_se:
+#create a symbolic link to fastq files (single end)
+rule copy_fastq_se:
     input: 
         return_fastq_files
     output:
@@ -15,7 +16,8 @@ rule link_to_fastq_se:
         ln -s {input} {output}
         """
 
-rule link_to_fastq_pe:
+#create a symbolic link to fastq files (paired end)
+rule copy_fastq_pe:
     input: r
         return_fastq_files
     output:
@@ -29,11 +31,11 @@ rule link_to_fastq_pe:
         ln -s {input[1]} {output.fastq_out_rv}
         """
 
-
+#merge the multiple lines if present (for paired end)
 rule merge_fastq_pe:
     input:
-        fw = lambda w: expand("results/fastq/{lane.sample}-{lane.lane}.1.fastq.gz", lane=units.loc[w.sample].itertuples()),
-        rv = lambda w: expand("results/fastq/{lane.sample}-{lane.lane}.2.fastq.gz", lane=units.loc[w.sample].itertuples())
+        fw = lambda w: expand("results/fastq/{lane.sample}-{lane.lane}.1.fastq.gz", lane=FASTQ_FILES.loc[w.sample].itertuples()),
+        rv = lambda w: expand("results/fastq/{lane.sample}-{lane.lane}.2.fastq.gz", lane=FASTQ_FILES.loc[w.sample].itertuples())
     output:
         fastq1 = temp("results/fastq/{{sample}}.1.fastq.gz"),
         fastq2 = temp("results/fastq/{{sample}}.2.fastq.gz")
@@ -47,10 +49,10 @@ rule merge_fastq_pe:
         cat {input.rv} > {output.fastq2}
         """
 
-
+#merge the multiple lines if present (for single end)
 rule merge_fastq_se:
     input:
-        lambda w: expand("results/fastq/{lane.sample}-{lane.lane}.fastq.gz", lane=units.loc[w.sample].itertuples()),
+        lambda w: expand("results/fastq/{lane.sample}-{lane.lane}.fastq.gz", lane=FASTQ_FILES.loc[w.sample].itertuples()),
     output:
         temp("results/fastq/{{sample}}.se.fastq.gz")
     log:
@@ -63,7 +65,7 @@ rule merge_fastq_se:
         """
 
 
-
+# run fastp for paired end samples
 rule fastp_pe:
     input:
         fw = "results/fastq/{{sample}}.1.fastq.gz",
@@ -89,7 +91,7 @@ rule fastp_pe:
         {params.fastp_params} 2> {log}
         """
 
-
+# run fastp for single end samples
 rule fastp_se:
     input:
         "results/fastq/{{sample}}.se.fastq.gz"
