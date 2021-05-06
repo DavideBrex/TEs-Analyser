@@ -2,9 +2,7 @@
 
 #file containing the sample information
 samples: configuration/samples.tsv
-
-#file containing the sample paths to rawa data
-
+#file containing the sample paths to raw data
 fastq_files: configuration/fastq_files.tsv
 
 #whether perform trimming or not

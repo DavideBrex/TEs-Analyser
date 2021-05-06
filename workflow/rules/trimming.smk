@@ -80,8 +80,6 @@ rule fastp_pe:
         fastp_params = config["params"]["fastp"]["pe"],
     message:
         "Processing fastq files from {input}"
-    shadow:
-        "minimal"
     shell:
         """
         fastp -i {input.fw} \
@@ -106,8 +104,6 @@ rule fastp_se:
         fastp_params = config["params"]["fastp"]["se"],
     message:
         "Processing fastq files from {input}"
-    shadow:
-        "minimal"
     shell:
         """
         fastp -i {input} \
