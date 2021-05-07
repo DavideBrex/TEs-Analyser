@@ -16,7 +16,10 @@ params:
     pe: "-t 1 -A -Q -L" 
   star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 30 --outFilterMismatchNmax 999" 
   star_second_pass: "--outFilterMultimapNmax 30 --outFilterMismatchNmax 999"
+  #which columns should I use to merge? \n - a: unstranded \n - b: First read of a pair has to map to the same strand as the gene, and the second read has to map to the opposite strand \n - c: reverse of b
+  start_count_column:  
   drop_seq_strand: false    #whether use strand info for tagging the bam files or not.
+  
 
 # input files required by the pipeline:
 ref:
@@ -47,5 +50,6 @@ tools_cpu:
   fastp_se: 5
   STAR_first_pass: 10
   STAR_second_pass: 10
+  samtools_sort: 7
 
 

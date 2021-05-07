@@ -20,7 +20,7 @@ rule tag_bam_file:
         USE_STRAND_INFO={params.dropseq_use_strand}
         """
 
-
+# select multimappers reads and intronic + intergenics reads 
 rule filter_bam_file:
     input: 
         rules.tag_bam_file.output
@@ -36,3 +36,24 @@ rule filter_bam_file:
         -script {params.filtering_json} \
         -out {output}
         """
+
+
+#convert bam files to fastq files
+rule bam_to_fastq:
+    input: 
+        rules.filter_bam_file.output
+    output: 
+        "results/filtered_fastq/{sample}.filtered.fastq.gz"
+    threads: config["tools_cpu"]["samtools_sort"]
+    message: 
+        "Converting the filtered bam file {input} to fastq..."
+    shell:
+        """
+        samtools sort -n -@ {threads} {input} \
+        | bedotools bamtofastq -i stdin -fq /dev/stdout \
+        | gzip -c > {output} 
+        """ 
+
+
+                                                               
+                                                                                                                            

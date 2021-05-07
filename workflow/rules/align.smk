@@ -64,3 +64,9 @@ rule move_bams:
         cp {input} {output}
         """
 
+
+rule merge_count_tables:
+    input: 
+        
+    output: 
+    run: 
