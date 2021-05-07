@@ -16,9 +16,12 @@ params:
     pe: "-t 1 -A -Q -L" 
   star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 30 --outFilterMismatchNmax 999" 
   star_second_pass: "--outFilterMultimapNmax 30 --outFilterMismatchNmax 999"
-  #which columns should I use to merge? \n - a: unstranded \n - b: First read of a pair has to map to the same strand as the gene, and the second read has to map to the opposite strand \n - c: reverse of b
-  start_count_column:  
-  drop_seq_strand: false    #whether use strand info for tagging the bam files or not.
+  #HTseqcount outputs 3 columns per sample. 
+  #col 1: unstranded
+  #col 2: first read of a pair has to map to the same strand as the gene, and the second read has to map on the opposite strand 
+  #col 3: reverse of line above
+  htseq_count_column: 3
+  drop_seq_strand: false    #whether to use strand info for tagging the bam files or not.
   
 
 # input files required by the pipeline:

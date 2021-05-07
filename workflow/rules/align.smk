@@ -13,7 +13,7 @@ rule align_first_pass:
     message:
         "First-pass alignment on the reference genome for: {input}"
     log:
-        align = "results/logs/alignments/{sample}.log"
+        align = "results/logs/alignments/{sample}.firstpass.log"
     shell:
         """
         STAR --genomeDir {params.genome_index} \
@@ -39,9 +39,9 @@ rule align_second_pass:
         pseudo_genome_index = config["ref"]["pseudo_genome_index"]
         star_par=config["params"]["star_second_pass"]
     message:
-        "First-pass alignment on the reference genome for: {input}"
+        "Second-pass alignment on the reference genome for: {input}"
     log:
-        align = "results/logs/alignments/{sample}.log"
+        align = "results/logs/alignments/{sample}.secondpass.log"
     shell:
         """
         STAR --genomeDir {params.genome_index} \
@@ -65,8 +65,13 @@ rule move_bams:
         """
 
 
+#combine the 
 rule merge_count_tables:
     input: 
-        
+        rules.align_first_pass.output.counts
     output: 
-    run: 
+        "results/expression_tabs/Gene_expression_counts.txt"
+    params:
+        col_to_pick=config["params"]["htseq_count_column"]
+    script:
+        "workflow/scripts/merge_count_tables.R"
