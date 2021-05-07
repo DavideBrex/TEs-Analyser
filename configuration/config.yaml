@@ -15,8 +15,19 @@ params:
     se: "-t 1 -A -Q -L"
     pe: "-t 1 -A -Q -L" 
   star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 30 --outFilterMismatchNmax 999" 
+  star_second_pass: "--outFilterMultimapNmax 30 --outFilterMismatchNmax 999"
+  drop_seq_strand: false    #whether use strand info for tagging the bam files or not.
 
+# input files required by the pipeline:
+ref:
+  genome_index: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/mouse_reference_files_GRCm38_p6"
+  pseudo_genome_index: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/STAR_index_TE_pseudogenome"
+  gtf_file: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/gencode.vM25.annotation.gtf"
+  
 
+dropseq_jar: "/home/davide.bressan-1/tools/Drop-seq_tools-2.4.0/jar/dropseq.jar"
+
+#parameters for the differential expression analysis
 
 diffexp:
   # Filter thresholds to call differentially expressed genes
@@ -27,6 +38,9 @@ diffexp:
     Control-vs-Treatment:
       - Control
       - Treatment
+
+
+# for each tool set the number of threads
 
 tools_cpu:
   fastp_pe: 5

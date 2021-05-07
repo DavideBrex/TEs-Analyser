@@ -1,0 +1,16 @@
+{     
+    "filters" : [
+        {"id" : "intergenic",
+         "tag" : "XF:INTERGENIC"        
+        },
+        {"id" : "intronic",
+         "tag" : "XF:INTRONIC"    
+        },
+        {"id" : "multimappers",
+         "tag" : "NH:>1"
+        }
+    ],
+    "rule" : "(intergenic | intronic) | multimappers"
+}
+
+
