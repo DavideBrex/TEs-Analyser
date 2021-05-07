@@ -1,5 +1,5 @@
 # TEs-Analyser
-Pipeline for Transposable Elements quantification and Differential Expression analysis
+Snakemake pipeline for Transposable Elements quantification and Differential Expression analysis
 
 
 ### Required packages
@@ -9,3 +9,6 @@ Pipeline for Transposable Elements quantification and Differential Expression an
 - STAR
 - bedtools 
 - R
+
+##### Author
+Davide Bressan 
