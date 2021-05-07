@@ -24,14 +24,15 @@ print(FASTQ_FILES)
 
 #define the outputs 
 Gene_expression = "results/expression_tabs/Gene_expression_counts.txt"
-TEs_expression="results/expression_tabs/TEs_expression.txt"
-bigwigs=expand("results/bigwigs/{sample}.bw", sample = SAMPLES)
-deseq2= expand("results/deseq2/{contrast}/log2FC{thresh_fc}_pval{thresh_pval}/{contrast}_enrichments_log2FC{thresh_fc}_pval{thresh_pval}.xlsx", contrast = config['diffexp']['contrasts'],
+TEs_expression="results/expression_tabs/TEs_expression_counts.txt"
+Gene_TEs_expression="results/expression_tabs/Gene_TEs_expression_counts.txt"
+#bigwigs=expand("results/bigwigs/{sample}.bw", sample = SAMPLES)
+#deseq2= expand("results/deseq2/{contrast}/log2FC{thresh_fc}_pval{thresh_pval}/{contrast}_enrichments_log2FC{thresh_fc}_pval{thresh_pval}.xlsx", contrast = config['diffexp']['contrasts'],
                                                                                                                                                 thresh_fc = config['diffexp']['log2fc'],
                                                                                                                                                 thresh_pval = config['diffexp']['pval'])
 
 rule all:
-    input: Gene_expression + TEs_expression  + deseq2
+    input: Gene_expression + TEs_expression  + Gene_TEs_expression
 
 
 #load the rules 

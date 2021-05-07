@@ -28,8 +28,9 @@ params:
 ref:
   genome_index: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/mouse_reference_files_GRCm38_p6"
   pseudo_genome_index: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/STAR_index_TE_pseudogenome"
-  gtf_file: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/gencode.vM25.annotation.gtf"
   
+  gtf_file: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/gencode.vM25.annotation.gtf"
+  gtf_file_TEs: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/new_TE_gtf_file.gtf"
 
 dropseq_jar: "/home/davide.bressan-1/tools/Drop-seq_tools-2.4.0/jar/dropseq.jar"
 

@@ -33,7 +33,7 @@ rule align_second_pass:
     output: 
         bam = "results/alignments/{sample}-filtered/{sample}.bam",
         index = "results/alignments/{sample}-filtered/{sample}.bam.bai"
-        log   = "results/02alignments/{sample}-filtered/{sample}/Log.final.out"
+        log   = "results/alignments/{sample}-filtered/{sample}/Log.final.out"
     threads: config["tools_cpu"]["STAR_second_pass"]
     params:
         pseudo_genome_index = config["ref"]["pseudo_genome_index"]
@@ -44,7 +44,7 @@ rule align_second_pass:
         align = "results/logs/alignments/{sample}.secondpass.log"
     shell:
         """
-        STAR --genomeDir {params.genome_index} \
+        STAR --genomeDir {params.pseudo_genome_index} \
         --readFilesIn {input} \
         --runThreadN {threads} \
         --readFilesCommand zcat \
@@ -65,7 +65,7 @@ rule move_bams:
         """
 
 
-#combine the 
+#combine the single sample gene count tables
 rule merge_count_tables:
     input: 
         rules.align_first_pass.output.counts

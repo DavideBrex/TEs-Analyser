@@ -28,5 +28,15 @@ def get_modified_fq(wildcards):
     """
     Return the newly created fastq files (were created from the filtered bam files)
     """
-    return "results/filtered_fastq/{sample}.fastq.gz", **wildcards)
+    return "results/filtered_fastq/{sample}.fastq.gz", sample = SAMPLES)
 
+
+
+rule TEs_counting:
+    input: 
+        rules.align_second_pass.output.bam
+    output:
+        tes_expression_counts = "results/expression_tabs/TEs_expression_counts.txt",
+        gene_tes_expression_counts = "results/expression_tabs/Gene_TEs_expression_counts.txt"
+    script:
+        "workflow/scripts/quantify_TEs_expression.R" 

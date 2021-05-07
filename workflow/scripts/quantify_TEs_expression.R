@@ -1,3 +1,18 @@
+message("Loading libraries...\n")
+suppressPackageStartupMessages(require(GenomicAlignments))
+suppressPackageStartupMessages(require(rtracklayer))
+suppressPackageStartupMessages(require(tidyverse))
+suppressPackageStartupMessages(require(GenomicRanges))
+suppressPackageStartupMessages(require(IRanges))
+suppressPackageStartupMessages(require(dplyr))
+
+
+
+bamfiles <- snakemake@input[[""]]
+
+
+
+
 quantify_TEs_expr <- function(path_to_main, TEs_gtf) {
   #check that the files exist and are in the correct folder
   setwd(paste0(path_to_main,"AllBAMs/"))
