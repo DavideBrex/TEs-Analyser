@@ -1,6 +1,4 @@
 
-
-
 def is_single_end(sample):
     #check whether the sample is single end
     return pd.isnull(FASTQ_FILES.loc[(sample), "fq2"][0])
@@ -31,12 +29,14 @@ def get_modified_fq(wildcards):
     return "results/filtered_fastq/{sample}.fastq.gz", sample = SAMPLES)
 
 
-
 rule TEs_counting:
     input: 
-        rules.align_second_pass.output.bam
+        bam_second_pass = rules.align_second_pass.output.bam
+        gene_count_expression = rules.merge_count_tables.output
     output:
         tes_expression_counts = "results/expression_tabs/TEs_expression_counts.txt",
         gene_tes_expression_counts = "results/expression_tabs/Gene_TEs_expression_counts.txt"
+    params:
+        gtf_TEs = config["ref"]["gtf_file_TEs"]
     script:
         "workflow/scripts/quantify_TEs_expression.R" 

@@ -22,13 +22,14 @@ params:
   #col 3: reverse of line above
   htseq_count_column: 3
   drop_seq_strand: false    #whether to use strand info for tagging the bam files or not.
+  summariseOverlap: 
   
 
 # input files required by the pipeline:
 ref:
   genome_index: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/mouse_reference_files_GRCm38_p6"
   pseudo_genome_index: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/STAR_index_TE_pseudogenome"
-  
+
   gtf_file: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/gencode.vM25.annotation.gtf"
   gtf_file_TEs: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/new_TE_gtf_file.gtf"
 
