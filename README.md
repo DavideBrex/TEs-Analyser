@@ -11,4 +11,4 @@ Snakemake pipeline for Transposable Elements quantification and Differential Exp
 - R
 
 ##### Author
-Davide Bressan 
+Davide Bressan - Fulvio Chiacchiera Lab
