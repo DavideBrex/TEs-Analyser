@@ -1,14 +1,15 @@
 
+
 rule align_first_pass:
     input: get_fq
     output: 
         bam = "results/alignments/{sample}/{sample}.bam",
-        index = "results/alignments/{sample}/{sample}.bam.bai"
-        log   = "results/alignments/{sample}/Log.final.out"
+        index = "results/alignments/{sample}/{sample}.bam.bai",
+        log   = "results/alignments/{sample}/Log.final.out",
         counts = "results/alignments/{sample}/ReadsPerGene.out.tab"
     threads: config["tools_cpu"]["STAR_first_pass"]
     params:
-        genome_index = config["ref"]["genome_index"]
+        genome_index = config["ref"]["genome_index"],
         star_par=config["params"]["star_first_pass"]
     message:
         "First-pass alignment on the reference genome for: {input}"
@@ -32,11 +33,11 @@ rule align_second_pass:
     input: get_modified_fq
     output: 
         bam = "results/alignments/{sample}-filtered/{sample}.bam",
-        index = "results/alignments/{sample}-filtered/{sample}.bam.bai"
+        index = "results/alignments/{sample}-filtered/{sample}.bam.bai",
         log   = "results/alignments/{sample}-filtered/{sample}/Log.final.out"
     threads: config["tools_cpu"]["STAR_second_pass"]
     params:
-        pseudo_genome_index = config["ref"]["pseudo_genome_index"]
+        pseudo_genome_index = config["ref"]["pseudo_genome_index"],
         star_par=config["params"]["star_second_pass"]
     message:
         "Second-pass alignment on the reference genome for: {input}"
@@ -68,10 +69,23 @@ rule move_bams:
 #combine the single sample gene count tables
 rule merge_count_tables:
     input: 
-        rules.align_first_pass.output.counts
+        expand("results/alignments/{sample}/ReadsPerGene.out.tab", sample = SAMPLES)
     output: 
         "results/expression_tabs/Gene_expression_counts.txt"
     params:
         col_to_pick=config["params"]["htseq_count_column"]
     script:
         "workflow/scripts/merge_count_tables.R"
+
+
+rule TEs_counting:
+    input: 
+        bam_second_pass = expand("results/alignments/{sample}-filtered/{sample}.bam", sample = SAMPLES),
+        gene_count_expression = "results/expression_tabs/Gene_expression_counts.txt"
+    output:
+        tes_expression_counts = "results/expression_tabs/TEs_expression_counts.txt",
+        gene_tes_expression_counts = "results/expression_tabs/Gene_TEs_expression_counts.txt"
+    params:
+        gtf_TEs = config["ref"]["gtf_file_TEs"]
+    script:
+        "workflow/scripts/quantify_TEs_expression.R" 

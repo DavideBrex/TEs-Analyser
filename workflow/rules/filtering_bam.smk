@@ -6,8 +6,8 @@ rule tag_bam_file:
     output: 
         temp("results/allbams/{sample}.tagged.bam")
     params:
-        gtf_file = config["ref"]["gtf_file"]
-        dropseq = config["dropseq_jar"]
+        gtf_file = config["ref"]["gtf_file"],
+        dropseq = config["dropseq_jar"],
         dropseq_use_strand = config["params"]["drop_seq_strand"]
     message:
         "Tagging the bam file {input}..."

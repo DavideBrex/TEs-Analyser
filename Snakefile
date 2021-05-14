@@ -20,7 +20,10 @@ FASTQ_FILES=pd.read_csv(config["fastq_files"], dtype=str, sep ="\t").set_index([
 
 SAMPLES = set(FASTQ_FILES["sample"])
 
-print(FASTQ_FILES)
+# print(FASTQ_FILES)
+# for row in FASTQ_FILES.itertuples():
+#     print(row.sample)
+#     print(row.lane)
 
 #define the outputs 
 Gene_expression = "results/expression_tabs/Gene_expression_counts.txt"
@@ -32,14 +35,18 @@ Gene_TEs_expression="results/expression_tabs/Gene_TEs_expression_counts.txt"
 #                                                                                                                                                thresh_pval = config['diffexp']['pval'])
 
 rule all:
-    input: Gene_expression + TEs_expression  + Gene_TEs_expression
+    input: 
+        Gene_expression,
+        TEs_expression,
+        Gene_TEs_expression
 
 
 #load the rules 
-include: "rules/common.smk"
-include: "rules/align.smk"
-include: "rules/trimming.smk"
-
+include: "workflow/rules/dag.smk"
+include: "workflow/rules/trimming.smk"
+include: "workflow/rules/common.smk"
+include: "workflow/rules/align.smk"
+include: "workflow/rules/filtering_bam.smk"
 
 ##### handle possible errors, clean temp folders #####
 onsuccess:
