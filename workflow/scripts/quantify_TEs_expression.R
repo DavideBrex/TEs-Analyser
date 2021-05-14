@@ -24,7 +24,7 @@ list_bams <- BamFileList(bamfiles)
 #count reads on TEs
 message("Count the reads mapped on the TEs...\n")
 
-# inter.feat  = F: count multimapp
+# inter.feat  = F: count multimapping reads
 reads_counts_TE  <- summarizeOverlaps(list_TE_is, list_bams, mode = "IntersectionStrict", ignore.strand = F, inter.feature = F) 
 tab_final_TE <- assay(reads_counts_TE)
 
@@ -34,6 +34,8 @@ tab_final_TE <- rownames_to_column(as.data.frame(tab_final_TE),var = "TE_id" )
 
 write.table(tab_final_TE, file = snakemake@output[["tes_expression_counts"]], quote = F, sep = "\t", row.names = F )
 
+
+message("TEs expression counts stored successfully...\n")
 message("Merge TEs and Gene expression...\n")
 
 #merge GENE counts and TEs counts in one single table
@@ -50,3 +52,6 @@ if ( file.exists(snakemake@input[["gene_count_expression"]])){
 } else {
     message("The gene expression table does not exist...\n")
 }
+
+
+message("All done!...\n")

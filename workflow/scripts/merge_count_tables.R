@@ -16,4 +16,4 @@ datalist = lapply(snakemake@input, function(x){
 final_tab <- Reduce(function(x,y) {merge(x,y, by= 'Gene_id')}, datalist)
 
 #store the result
-write.table( final_tab.filt, file=snakemake@output[[1]], sep = "\t", quote = F, row.names = F )
+write.table( final_tab, file=snakemake@output[[1]], sep = "\t", quote = F, row.names = F )
