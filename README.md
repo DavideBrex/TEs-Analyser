@@ -12,3 +12,8 @@ Snakemake pipeline for Transposable Elements quantification and Differential Exp
 
 ##### Author
 Davide Bressan - Fulvio Chiacchiera Lab
+
+
+##### Rule graph
+
+![Alt text](https://github.com/DavideBrex/TEs-Analyser/blob/main/rulegraph.svg?raw=true "Title")
