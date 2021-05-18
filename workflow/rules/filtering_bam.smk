@@ -9,6 +9,8 @@ rule tag_bam_file:
         gtf_file = config["ref"]["gtf_file"],
         dropseq = config["dropseq_jar"],
         dropseq_use_strand = config["params"]["drop_seq_strand"]
+    log:
+        "results/logs/bam_tagging/{sample}.log"
     message:
         "Tagging the bam file {input}..."
     shell:
@@ -28,6 +30,8 @@ rule filter_bam_file:
         temp("results/allbams/{sample}.filtered.bam")
     params:
         filtering_json = config["params"]["bam_filtering_json"]
+    log:
+        "results/logs/bam_filtering/{sample}.log"
     message:
         "Selecting multimapping, intronic or intergenic reads..."
     shell:
@@ -48,6 +52,8 @@ rule bam_to_fastq:
         config["tools_cpu"]["samtools_sort"]
     params:
         "results/filtered_fastq/{sample}"
+    log:
+        "results/logs/bam_to_fastq/{sample}.log"
     message:
         "Converting the filtered bam file {input} to fastq..."
     shell:

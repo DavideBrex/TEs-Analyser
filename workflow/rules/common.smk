@@ -32,3 +32,7 @@ def get_modified_fq(wildcards):
 
 
 
+rule differential_expression_analysis:
+    input: 
+    output: 
+    run: 

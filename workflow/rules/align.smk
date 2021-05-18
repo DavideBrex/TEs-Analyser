@@ -1,5 +1,5 @@
 
-
+# align against the reference genome and quantify the gene expression counts
 rule align_first_pass:
     input: get_fq
     output: 
@@ -32,7 +32,7 @@ rule align_first_pass:
         samtools index {output.bam} 2>> {log.align}
         """
 
-
+# align against the TEs reference pseudo-genome
 rule align_second_pass:
     input: get_modified_fq
     output: 
@@ -57,9 +57,9 @@ rule align_second_pass:
         --outSAMtype BAM SortedByCoordinate \
         --outSAMattributes NH HI AS NM MD  \
         --alignIntronMax 1 \
-	--outFileNamePrefix {params.out_dir} \
+	    --outFileNamePrefix {params.out_dir} \
         {params.star_par} 2> {log.align}
-	mv {params.out_dir}Aligned.sortedByCoord.out.bam {output.bam} 
+	    mv {params.out_dir}Aligned.sortedByCoord.out.bam {output.bam} 
         samtools index {output.bam} 2>> {log.align}
         """
 
@@ -81,10 +81,13 @@ rule merge_count_tables:
         "results/expression_tabs/Gene_expression_counts.txt"
     params:
         col_to_pick=config["params"]["htseq_count_column"]
+    log:
+        "results/logs/merging_tabs.log"
     script:
         "../scripts/merge_count_tables.R"
 
 
+#count the reads mapping onto the TEs repeats.
 rule TEs_counting:
     input: 
         bam_second_pass = expand("results/alignments/{sample}-filtered/{sample}.bam", sample = SAMPLES),
@@ -94,5 +97,19 @@ rule TEs_counting:
         gene_tes_expression_counts = "results/expression_tabs/Gene_TEs_expression_counts.txt"
     params:
         gtf_TEs = config["ref"]["gtf_file_TEs"]
+    log:
+        "results/logs/TEs_counting.log"
     script:
         "../scripts/quantify_TEs_expression.R" 
+
+
+#perform differential expression analysis
+
+rule differential_expression:
+    input: 
+        tes_expr = rules.TEs_counting.output.tes_expression_counts
+        genes_expr = rules.merge_count_tables.output
+        genes_tes_expr = rules.TEs_counting.output.gene_tes_expression_counts
+    output: 
+
+    script:
