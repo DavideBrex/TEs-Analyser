@@ -36,17 +36,20 @@ ref:
 
 dropseq_jar: "/home/davide.bressan-1/tools/Drop-seq_tools-2.4.0/jar/dropseq.jar"
 
-#parameters for the differential expression analysis
+#parameters for the differential expression analysis. you can set multiple contrasts and/or multple thresholds
 
 diffexp:
   # Filter thresholds to call differentially expressed genes
-  pval: 0.05
-  log2fc: 1.5
+  pval: 
+    - 0.05
+  log2fc: 
+    - 1.5
+    - 2
   # contrasts for the deseq2 results method
   contrasts:
-    Control-vs-Treatment:
-      -Control
-      -Treatment
+    Control-vs-Control:
+      - Treatment
+      - Control
 
 
 # for each tool set the number of threads

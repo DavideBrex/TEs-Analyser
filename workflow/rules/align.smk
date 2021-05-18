@@ -101,15 +101,3 @@ rule TEs_counting:
         "results/logs/TEs_counting.log"
     script:
         "../scripts/quantify_TEs_expression.R" 
-
-
-#perform differential expression analysis
-
-rule differential_expression:
-    input: 
-        tes_expr = rules.TEs_counting.output.tes_expression_counts
-        genes_expr = rules.merge_count_tables.output
-        genes_tes_expr = rules.TEs_counting.output.gene_tes_expression_counts
-    output: 
-
-    script:

@@ -1,3 +1,8 @@
+#set the log
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log)
+sink(log, type = "message")
+
 # Merge the read count tables for each sample in a single table #
 
 # which coulmn to pick for each sample count matrix (see config.yaml for an explanation)

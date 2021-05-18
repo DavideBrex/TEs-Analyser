@@ -30,9 +30,3 @@ def get_modified_fq(wildcards):
     """
     return expand("results/filtered_fastq/{sample}.filtered.fastq.gz", **wildcards)
 
-
-
-rule differential_expression_analysis:
-    input: 
-    output: 
-    run: 

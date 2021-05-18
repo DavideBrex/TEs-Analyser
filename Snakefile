@@ -38,7 +38,10 @@ rule all:
     input: 
         Gene_expression,
         TEs_expression,
-        Gene_TEs_expression
+        Gene_TEs_expression,
+        expand("results/deseq2/{contrast}/log2FC_{log2fc}_pval_{pval}_Deseq2_filt.tsv", contrast = config["diffexp"]["contrasts"],
+            log2fc = config["diffexp"]["log2fc"],
+            pval = config["diffexp"]["pval"])
 
 
 #load the rules 
@@ -47,6 +50,7 @@ include: "workflow/rules/trimming.smk"
 include: "workflow/rules/common.smk"
 include: "workflow/rules/align.smk"
 include: "workflow/rules/filtering_bam.smk"
+include: "workflow/rules/diffExpr.smk"
 
 ##### handle possible errors, clean temp folders #####
 onsuccess:

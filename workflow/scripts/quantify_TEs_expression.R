@@ -6,8 +6,12 @@ suppressPackageStartupMessages(require(GenomicRanges))
 suppressPackageStartupMessages(require(IRanges))
 suppressPackageStartupMessages(require(dplyr))
 
+#set log file
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log)
+sink(log, type = "message")
 
-
+#read the bam files
 bamfiles <- snakemake@input[["bam_second_pass"]]
 
 ifelse(length(bamfiles) == 0, stop("No bam files detected...\n"), no = 1)
