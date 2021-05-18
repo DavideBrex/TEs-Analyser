@@ -27,7 +27,7 @@ rule filter_bam_file:
     output: 
         temp("results/allbams/{sample}.filtered.bam")
     params:
-        filtering_json = "/workflow/scripts/filtering_settings_TEs.json"
+        filtering_json = config["params"]["bam_filtering_json"]
     message:
         "Selecting multimapping, intronic or intergenic reads..."
     shell:
@@ -40,20 +40,19 @@ rule filter_bam_file:
 
 #convert bam files to fastq files
 rule bam_to_fastq:
-    input: 
+    input:
         rules.filter_bam_file.output
-    output: 
+    output:
         "results/filtered_fastq/{sample}.filtered.fastq.gz"
-    threads: config["tools_cpu"]["samtools_sort"]
-    message: 
+    threads:
+        config["tools_cpu"]["samtools_sort"]
+    params:
+        "results/filtered_fastq/{sample}"
+    message:
         "Converting the filtered bam file {input} to fastq..."
     shell:
         """
-        samtools sort -n -@ {threads} {input} \
-        | bedotools bamtofastq -i stdin -fq /dev/stdout \
+        samtools sort -n -T {params}.tmp -@ {threads} {input} \
+        | bedtools bamtofastq -i stdin -fq /dev/stdout \
         | gzip -c > {output} 
-        """ 
-
-
-                                                               
-                                                                                                                            
+        """

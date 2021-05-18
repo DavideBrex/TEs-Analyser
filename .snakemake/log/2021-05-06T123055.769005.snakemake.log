@@ -1,4 +1,0 @@
-KeyError in line 17 of /shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TEs-Analyser/Snakefile:
-"None of ['NAME'] are in the columns"
-  File "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TEs-Analyser/Snakefile", line 17, in <module>
-  File "/home/davide.bressan-1/anaconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/frame.py", line 4724, in set_index

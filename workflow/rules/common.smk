@@ -28,7 +28,7 @@ def get_modified_fq(wildcards):
     """
     Return the newly created fastq files (were created from the filtered bam files)
     """
-    return expand("results/filtered_fastq/{sample}.filtered.fastq.gz", sample = SAMPLES)
+    return expand("results/filtered_fastq/{sample}.filtered.fastq.gz", **wildcards)
 
 
 

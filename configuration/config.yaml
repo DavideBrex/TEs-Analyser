@@ -22,6 +22,7 @@ params:
   #col 3: reverse of line above
   htseq_count_column: 3
   drop_seq_strand: false    #whether to use strand info for tagging the bam files or not.
+  bam_filtering_json: "./workflow/scripts/filtering_settings_TEs.json"
   summariseOverlap: 
   
 
@@ -44,8 +45,8 @@ diffexp:
   # contrasts for the deseq2 results method
   contrasts:
     Control-vs-Treatment:
-      - Control
-      - Treatment
+      -Control
+      -Treatment
 
 
 # for each tool set the number of threads

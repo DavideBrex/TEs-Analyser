@@ -10,7 +10,9 @@ rule align_first_pass:
     threads: config["tools_cpu"]["STAR_first_pass"]
     params:
         genome_index = config["ref"]["genome_index"],
-        star_par=config["params"]["star_first_pass"]
+        star_par = config["params"]["star_first_pass"],
+	out_dir = "results/alignments/{sample}/",
+	samtools_cpus = config["tools_cpu"]["samtools_sort"]
     message:
         "First-pass alignment on the reference genome for: {input}"
     log:
@@ -24,7 +26,9 @@ rule align_first_pass:
         --readFilesCommand zcat \
         --outSAMtype BAM SortedByCoordinate \
         --outSAMattributes NH HI AS NM MD  \
-        {params.star_par} 2> {log.align} 
+	--outFileNamePrefix {params.out_dir} \
+        {params.star_par} 2> {log.align}
+	mv {params.out_dir}Aligned.sortedByCoord.out.bam {output.bam}
         samtools index {output.bam} 2>> {log.align}
         """
 
@@ -34,11 +38,12 @@ rule align_second_pass:
     output: 
         bam = "results/alignments/{sample}-filtered/{sample}.bam",
         index = "results/alignments/{sample}-filtered/{sample}.bam.bai",
-        log   = "results/alignments/{sample}-filtered/{sample}/Log.final.out"
+        log   = "results/alignments/{sample}-filtered/Log.final.out"
     threads: config["tools_cpu"]["STAR_second_pass"]
     params:
         pseudo_genome_index = config["ref"]["pseudo_genome_index"],
-        star_par=config["params"]["star_second_pass"]
+        star_par = config["params"]["star_second_pass"],
+	out_dir = "results/alignments/{sample}-filtered/"
     message:
         "Second-pass alignment on the reference genome for: {input}"
     log:
@@ -52,7 +57,9 @@ rule align_second_pass:
         --outSAMtype BAM SortedByCoordinate \
         --outSAMattributes NH HI AS NM MD  \
         --alignIntronMax 1 \
-        {params.star_par} 2> {log.align} 
+	--outFileNamePrefix {params.out_dir} \
+        {params.star_par} 2> {log.align}
+	mv {params.out_dir}Aligned.sortedByCoord.out.bam {output.bam} 
         samtools index {output.bam} 2>> {log.align}
         """
 
@@ -75,7 +82,7 @@ rule merge_count_tables:
     params:
         col_to_pick=config["params"]["htseq_count_column"]
     script:
-        "workflow/scripts/merge_count_tables.R"
+        "../scripts/merge_count_tables.R"
 
 
 rule TEs_counting:
@@ -88,4 +95,4 @@ rule TEs_counting:
     params:
         gtf_TEs = config["ref"]["gtf_file_TEs"]
     script:
-        "workflow/scripts/quantify_TEs_expression.R" 
+        "../scripts/quantify_TEs_expression.R" 
