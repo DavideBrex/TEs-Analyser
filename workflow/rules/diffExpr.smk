@@ -1,7 +1,6 @@
 
 
 #perform differential expression analysis
-
 rule create_deseq2_ojects:
     input: 
         tes_expr = rules.TEs_counting.output.tes_expression_counts
