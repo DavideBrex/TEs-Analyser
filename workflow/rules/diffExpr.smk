@@ -3,16 +3,16 @@
 #perform differential expression analysis
 rule create_deseq2_ojects:
     input: 
-        tes_expr = rules.TEs_counting.output.tes_expression_counts
-        genes_expr = rules.merge_count_tables.output
+        tes_expr = rules.TEs_counting.output.tes_expression_counts,
+        genes_expr = rules.merge_count_tables.output,
         genes_tes_expr = rules.TEs_counting.output.gene_tes_expression_counts
     output: 
-        rds_genes = "results/deseq2/deseq2_object_genes.rds"
-        rds_tes = "results/deseq2/deseq2_object_TEs.rds"
+        rds_genes = "results/deseq2/deseq2_object_genes.rds",
+        rds_tes = "results/deseq2/deseq2_object_TEs.rds",
         rds_genes_tes = "results/deseq2/deseq2_object_genes_TEs.rds"
     params:
-        sample_file = config["samples"]
-        pval_thres = config["diffexp"]["pval"]
+        sample_file = config["samples"],
+        pval_thres = config["diffexp"]["pval"],
         log2fc = config["diffexp"]["log2fc"]
     log:
         "results/logs/deseq2/deseq2_objects.log"
@@ -59,8 +59,8 @@ rule filtering_de_elements:
 
 rule volcano:
     input:
-        table_genes_ann = rules.filtering_de_elements.output.table_genes_ann
-        table_tes_ann = rules.filtering_de_elements.output.table_tes_ann
+        table_genes_ann = rules.filtering_de_elements.output.table_genes_ann,
+        table_tes_ann = rules.filtering_de_elements.output.table_tes_ann,
         table_genes_tes_ann = rules.filtering_de_elements.output.table_genes_tes_ann
     output:
         volcano_genes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_log2fc{log2FC}_pval{pvalue}.pdf",
@@ -69,7 +69,7 @@ rule volcano:
     params:
         pval     = lambda w: w.pvalue,
         log2fc   = lambda w: w.log2fc,
-        contrast = lambda w: w.contrast,
+        contrast = lambda w: w.contrast
     log:
         "results/logs/deseq2/{contrast}.pval_{pvalue}.log2fc_{log2fc}.volcano.log"
     script:
@@ -79,11 +79,11 @@ rule enrichments:
     input:
         rules.filtering_de_elements.output.table_genes_ann
     output:
-        enrichments = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xls"
+        "results/deseq2/{contrast}/{contrast}_enrichments.xls"
     params:
-        genome       = config["ref"]["genome"]
+        genome = config["ref"]["genome"]
     log:
-        "results/logs/deseq2/{contrast}.{pvalue}.{log2fc}.GSEA.log"
+        "results/logs/deseq2/{contrast}.GSEA.log"
     script:
         "../scripts/diffExpr/GSEA_analysis.R"   
 

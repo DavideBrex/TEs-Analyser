@@ -8,7 +8,7 @@ import snakemake
 min_version("5.4.3")
 
 ##### Singularity image path
-#singularity: "/hpcnfs/data/DP/Singularity/dfernandezperez-bioinformatics-singularity-master-chipseq.simg"
+singularity: "/shares/CIBIO-Storage/CIBIO/sharedLC/singularity_containers/rnaseq-snakemake.simg"
 
 ##### config file
 configfile: "configuration/config.yaml"
@@ -45,11 +45,9 @@ rule all:
         expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_log2fc{log2FC}_pval{pvalue}.pdf", contrast = config["diffexp"]["contrasts"],
             log2fc = config["diffexp"]["log2FC"],
             pvalue = config["diffexp"]["pval"]),
-        expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xls", contrast = config["diffexp"]["contrasts"],
-            log2fc = config["diffexp"]["log2FC"],
-            pvalue = config["diffexp"]["pval"])
-
-"results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_genes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv"
+        expand("results/deseq2/{contrast}/{contrast}_enrichments.xls", contrast = config["diffexp"]["contrasts"])
+            
+        
 #load the rules 
 include: "workflow/rules/dag.smk"
 include: "workflow/rules/trimming.smk"

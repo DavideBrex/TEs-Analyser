@@ -15,9 +15,7 @@ source("workflow/scripts/general_functions.R")
 
 # Perform the Gene Set Enrichment Analysis
 
-
-
-#read table
+# Read table
 table_genes <- read.delim(snakemake@input[[1]])
 
 
@@ -70,4 +68,4 @@ list_of_datasets <- list( "GO Upregulated"        = UP.go@result %>% filter(p.ad
                           "GSEA c2all"            = GSEA.c2all %>% filter(padj < 0.25) %>% dplyr::select(-c(leadingEdge,nMoreExtreme)) %>% arrange(pval) %>% add_row(),
                           "GSEA c3tft"            = GSEA.c3tft %>% filter(padj < 0.25) %>% dplyr::select(-c(leadingEdge,nMoreExtreme)) %>% arrange(pval) %>% add_row())
 
-write.xlsx(list_of_datasets, file = snakemake@output[["enrichments"]])
+write.xlsx(list_of_datasets, file = snakemake@output[[1]])
