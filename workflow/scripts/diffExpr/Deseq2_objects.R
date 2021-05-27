@@ -37,14 +37,14 @@ stopifnot(identical(colnames(tes_genes_counts), as.character(metadata$sample)))
 tes_counts_dds <- DESeqDataSetFromMatrix(tes_counts, metadata, design = ~ condition)
 tes_dds <- DESeq(tes_counts_dds)
 
-genes_counts_dds <- DESeqDataSetFromMatrix(tes_counts, metadata, design = ~ condition)
-tes_dds <- DESeq(genes_counts_dds)
+genes_counts_dds <- DESeqDataSetFromMatrix(genes_counts, metadata, design = ~ condition)
+genes_dds <- DESeq(genes_counts_dds)
 
-genes_tes_counts_dds <- DESeqDataSetFromMatrix(tes_counts, metadata, design = ~ condition)
-tes_dds <- DESeq(genes_tes_counts_dds)
+genes_tes_counts_dds <- DESeqDataSetFromMatrix(tes_genes_counts, metadata, design = ~ condition)
+genes_tes_dds <- DESeq(genes_tes_counts_dds)
 
 # store the objects
 
-saveRDS(tes_counts_dds, file = snakemake@output[["rds_tes"]])
-saveRDS(genes_counts_dds, file = snakemake@output[["rds_genes"]])
-saveRDS(genes_tes_counts_dds, file = snakemake@output[["rds_genes_TEs"]])
+saveRDS(tes_dds, file = snakemake@output[["rds_tes"]])
+saveRDS(genes_dds, file = snakemake@output[["rds_genes"]])
+saveRDS(genes_tes_dds, file = snakemake@output[["rds_genes_tes"]])

@@ -40,14 +40,15 @@ rule all:
         TEs_expression,
         Gene_TEs_expression,
         expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_genes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv", contrast = config["diffexp"]["contrasts"],
-            log2fc = config["diffexp"]["log2FC"],
+            log2FC = config["diffexp"]["log2FC"],
             pvalue = config["diffexp"]["pval"]),
         expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_log2fc{log2FC}_pval{pvalue}.pdf", contrast = config["diffexp"]["contrasts"],
-            log2fc = config["diffexp"]["log2FC"],
+            log2FC = config["diffexp"]["log2FC"],
             pvalue = config["diffexp"]["pval"]),
-        expand("results/deseq2/{contrast}/{contrast}_enrichments.xls", contrast = config["diffexp"]["contrasts"])
-            
-        
+        expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xlsx", contrast = config["diffexp"]["contrasts"],
+            log2FC = config["diffexp"]["log2FC"],
+            pvalue = config["diffexp"]["pval"])
+
 #load the rules 
 include: "workflow/rules/dag.smk"
 include: "workflow/rules/trimming.smk"

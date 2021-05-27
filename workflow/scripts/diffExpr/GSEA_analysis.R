@@ -36,13 +36,15 @@ UP <- table_genes %>%
   dplyr::filter(DEG == "Upregulated") %>% 
   dplyr::select(Geneid) %>% 
   pull %>%
-  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = db)
+  { gsub("\\..*","", .)} %>%
+  bitr(fromType = "ENSEMBL",toType = c("ENTREZID"), OrgDb = db)
 
-DWN <- table_genes %>% 
+DWN <- table_genes %>%  
   dplyr::filter(DEG == "Downregulated") %>% 
   dplyr::select(Geneid) %>% 
   pull %>%
-  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = db)
+  { gsub("\\..*","",.)} %>%
+  bitr(fromType = "ENSEMBL",toType = c("ENTREZID"), OrgDb = db)
 
 
 #perform analysis
@@ -52,9 +54,9 @@ UP.pa      <- PAenrichment(UP, org = pa.genome)
 DWN.go     <- goEnrichment(DWN, ont = "BP", db = db)
 DWN.kegg   <- KEGGenrichment(DWN, org = kegg.genome, db = db)
 DWN.pa     <- PAenrichment(DWN, org = pa.genome)
-GSEA.hall  <- GSEA_enrichment(table_genes, "misc/h.all.v6.2.symbols.gmt")
-GSEA.c2all <- GSEA_enrichment(table_genes, "misc/c2.all.v6.2.symbols.gmt")
-GSEA.c3tft <- GSEA_enrichment(table_genes, "misc/c3.tft.v6.2.symbols.gmt")
+GSEA.hall  <- GSEA_enrichment(table_genes, "resources/h.all.v6.2.symbols.gmt")
+GSEA.c2all <- GSEA_enrichment(table_genes, "resources/c2.all.v6.2.symbols.gmt")
+GSEA.c3tft <- GSEA_enrichment(table_genes, "resources/c3.tft.v6.2.symbols.gmt")
 
 
 # ------ save outputs to xlsx ---------
@@ -68,4 +70,4 @@ list_of_datasets <- list( "GO Upregulated"        = UP.go@result %>% filter(p.ad
                           "GSEA c2all"            = GSEA.c2all %>% filter(padj < 0.25) %>% dplyr::select(-c(leadingEdge,nMoreExtreme)) %>% arrange(pval) %>% add_row(),
                           "GSEA c3tft"            = GSEA.c3tft %>% filter(padj < 0.25) %>% dplyr::select(-c(leadingEdge,nMoreExtreme)) %>% arrange(pval) %>% add_row())
 
-write.xlsx(list_of_datasets, file = snakemake@output[[1]])
+write.xlsx(list_of_datasets, file = snakemake@output[["enrichments"]])

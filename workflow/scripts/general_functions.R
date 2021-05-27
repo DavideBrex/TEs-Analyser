@@ -1,4 +1,14 @@
 
+#Function to round all numeric colums of dataframe
+round_df <- function(df, digits) {
+  nums <- vapply(df, is.numeric, FUN.VALUE = logical(1))
+  
+  df[,nums] <- round(df[,nums], digits = digits)
+  
+  (df)
+}
+
+########## ENRICHMENTS FUNCTIONS #################
 
 goEnrichment <- function(df, ont = "BP", db = org.Mm.eg.db) {
   require(clusterProfiler)

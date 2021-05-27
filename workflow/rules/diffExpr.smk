@@ -13,7 +13,7 @@ rule create_deseq2_ojects:
     params:
         sample_file = config["samples"],
         pval_thres = config["diffexp"]["pval"],
-        log2fc = config["diffexp"]["log2fc"]
+        log2fc = config["diffexp"]["log2FC"]
     log:
         "results/logs/deseq2/deseq2_objects.log"
     script:
@@ -40,9 +40,9 @@ rule differential_expresssion:
 
 rule filtering_de_elements:
     input: 
-        table_genes = rule.differential_expresssion.output.table_genes,
-        table_tes = rule.differential_expresssion.output.table_tes,
-        table_genes_tes = rule.differential_expresssion.output.table_genes_tes
+        table_genes = rules.differential_expresssion.output.table_genes,
+        table_tes = rules.differential_expresssion.output.table_tes,
+        table_genes_tes = rules.differential_expresssion.output.table_genes_tes
     output: 
         table_genes_ann = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_genes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv",
         table_tes_ann = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_tes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv",
@@ -51,7 +51,7 @@ rule filtering_de_elements:
         pval      = lambda w: w.pvalue,
         log2fc    = lambda w: w.log2FC
     log:
-        "results/logs/deseq2/{contrast}.{pvalue}.{log2fc}.filter_de.log"
+        "results/logs/deseq2/{contrast}.{pvalue}.{log2FC}.filter_de.log"
     script:
         "../scripts/diffExpr/Filter_DE_elements.R"
 
@@ -67,11 +67,11 @@ rule volcano:
         volcano_tes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_tes_log2fc{log2FC}_pval{pvalue}.pdf",
         volcano_genes_tes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_tes_log2fc{log2FC}_pval{pvalue}.pdf"
     params:
-        pval     = lambda w: w.pvalue,
-        log2fc   = lambda w: w.log2fc,
+        pvalue     = lambda w: w.pvalue,
+        log2FC   = lambda w: w.log2FC,
         contrast = lambda w: w.contrast
     log:
-        "results/logs/deseq2/{contrast}.pval_{pvalue}.log2fc_{log2fc}.volcano.log"
+        "results/logs/deseq2/{contrast}.pval_{pvalue}.log2fc_{log2FC}.volcano.log"
     script:
         "../scripts/diffExpr/Volcano_plot.R"  
 
@@ -79,11 +79,11 @@ rule enrichments:
     input:
         rules.filtering_de_elements.output.table_genes_ann
     output:
-        "results/deseq2/{contrast}/{contrast}_enrichments.xls"
+        enrichments = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xlsx"
     params:
         genome = config["ref"]["genome"]
     log:
-        "results/logs/deseq2/{contrast}.GSEA.log"
+        "results/logs/deseq2/{contrast}.log2fc{log2FC}_pval{pvalue}.GSEA.log"
     script:
         "../scripts/diffExpr/GSEA_analysis.R"   
 

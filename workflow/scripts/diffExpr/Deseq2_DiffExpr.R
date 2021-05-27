@@ -1,3 +1,10 @@
+#set log file
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log)
+sink(log, type = "message")
+
+
+
 message("Loading libraries...\n")
 suppressPackageStartupMessages(require(tidyverse))
 suppressPackageStartupMessages(require(IRanges))
@@ -5,12 +12,8 @@ suppressPackageStartupMessages(require(dplyr))
 suppressPackageStartupMessages(require(DESeq2))
 suppressPackageStartupMessages(require(IHW))
 suppressPackageStartupMessages(require(apeglm))
-suppressPackageStartupMessages(require(EnhancedVolcano))
-#set log file
-log <- file(snakemake@log[[1]], open = "wt")
-sink(log)
-sink(log, type = "message")
-
+#suppressPackageStartupMessages(require(EnhancedVolcano))
+source("workflow/scripts/general_functions.R")
 
 #set the contrast
 contrast <- paste("condition_", snakemake@params[["contrast"]][1], "_vs_", snakemake@params[["contrast"]][2], sep = "")

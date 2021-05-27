@@ -48,7 +48,7 @@ diffexp:
     - 1
   # contrasts for the deseq2 results method
   contrasts:
-    Control-vs-Control:
+    Treatment-vs-Control:
       - Treatment
       - Control
 
