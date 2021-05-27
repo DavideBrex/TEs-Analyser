@@ -24,7 +24,7 @@ plot_volcano_fun <- function(df, output_name, title, pval, log2FC){
     volcano_plot <- ggplot(data = df, aes(x=log2FoldChange, y=-log10(padj), colour=DEG) ) +
                         geom_point(alpha=0.7, size=2) +
 
-                        annotate("text", label = sum(df$DEG == "Upregulated"), color = "red", y = 0, x = 9, 
+                        annotate("text", label = sum(df$DEG == "Upregulated"), color = "red", y = 0, x = 8, 
                                     vjust="inward",hjust="inward", size = 7) +
                         annotate("text", label = sum(df$DEG == "Downregulated"), color = "darkgreen", y = 0, x = -8,
                                     vjust="inward",hjust="inward", size = 7) +
@@ -46,7 +46,7 @@ plot_volcano_fun <- function(df, output_name, title, pval, log2FC){
     
 
     pdf(snakemake@output[[output_name]])
-    volcano_plot
+    print(volcano_plot)
     dev.off()
 }
 
