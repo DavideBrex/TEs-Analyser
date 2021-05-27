@@ -1,4 +1,4 @@
-<img align="right" src="https://user-images.githubusercontent.com/48018596/119865582-1c511f00-bf1c-11eb-9f89-22165532cd4a.png">
+<img align="right" src="https://raw.githubusercontent.com/DavideBrex/TEs-Analyser/67e1b375aebb02d3a3cc4a8da651d7a698b85c3c/rulegraph_2.svg">
 
 
 # TEs-Analyser
