@@ -1,7 +1,9 @@
+<img align="right" src="https://user-images.githubusercontent.com/48018596/119865582-1c511f00-bf1c-11eb-9f89-22165532cd4a.png">
+
+
 # TEs-Analyser
 Snakemake pipeline for Transposable Elements quantification and Differential Expression analysis
 
-<img align="right" src="https://user-images.githubusercontent.com/48018596/119865582-1c511f00-bf1c-11eb-9f89-22165532cd4a.png">
 
 ### Required packages
 
