@@ -10,6 +10,8 @@ suppressPackageStartupMessages(library(ReactomePA))
 suppressPackageStartupMessages(library(org.Mm.eg.db))
 suppressPackageStartupMessages(library(openxlsx))
 
+source("workflow/scripts/general_functions.R")
+
 
 # Perform the Gene Set Enrichment Analysis
 
@@ -17,20 +19,6 @@ suppressPackageStartupMessages(library(openxlsx))
 
 #read table
 table_genes <- read.delim(snakemake@input[[1]])
-
-
-# Get UP and DOWN-regulated 
-UP <- table_genes %>% 
-  dplyr::filter(DEG == "Upregulated") %>% 
-  dplyr::select(Geneid) %>% 
-  pull %>%
-  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = org.Mm.eg.db)
-
-DWN <- table_genes %>% 
-  dplyr::filter(DEG == "Downregulated") %>% 
-  dplyr::select(Geneid) %>% 
-  pull %>%
-  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = org.Mm.eg.db)
 
 
 # Set mouse or human references for the databases
@@ -45,6 +33,21 @@ if (snakemake@params[["genome"]] == "mouse") {
 }
 
 
+# Get UP and DOWN-regulated 
+UP <- table_genes %>% 
+  dplyr::filter(DEG == "Upregulated") %>% 
+  dplyr::select(Geneid) %>% 
+  pull %>%
+  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = db)
+
+DWN <- table_genes %>% 
+  dplyr::filter(DEG == "Downregulated") %>% 
+  dplyr::select(Geneid) %>% 
+  pull %>%
+  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = db)
+
+
+#perform analysis
 UP.go      <- goEnrichment(UP, ont = "BP", db = db)
 UP.kegg    <- KEGGenrichment(UP, org = kegg.genome, db = db)
 UP.pa      <- PAenrichment(UP, org = pa.genome)

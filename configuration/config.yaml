@@ -28,6 +28,7 @@ params:
 
 # input files required by the pipeline:
 ref:
+  genome: "mouse"
   genome_index: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/mouse_reference_files_GRCm38_p6"
   pseudo_genome_index: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/STAR_index_TE_pseudogenome"
 

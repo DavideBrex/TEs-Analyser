@@ -79,14 +79,11 @@ rule enrichments:
     input:
         rules.filtering_de_elements.output.table_genes_ann
     output:
-        enrichments = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xls",
+        enrichments = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xls"
     params:
-        genome       = config["ref"]["genome"],
-        pvalue       = config["enrichments"]["pval"],
-        qvalue       = config["enrichments"]["qval"],
-        set_universe = config["enrichments"]["set_universe"],
+        genome       = config["ref"]["genome"]
     log:
-        "results/logs/deseq2/{contrast}.pval_{pvalue}.log2fc_{log2fc}.GSEA.log"
+        "results/logs/deseq2/{contrast}.{pvalue}.{log2fc}.GSEA.log"
     script:
         "../scripts/diffExpr/GSEA_analysis.R"   
 

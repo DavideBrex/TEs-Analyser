@@ -39,11 +39,17 @@ rule all:
         Gene_expression,
         TEs_expression,
         Gene_TEs_expression,
-        expand("results/deseq2/{contrast}/log2FC_{log2fc}_pval_{pval}_Deseq2_filt.tsv", contrast = config["diffexp"]["contrasts"],
-            log2fc = config["diffexp"]["log2fc"],
-            pval = config["diffexp"]["pval"])
+        expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_genes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv", contrast = config["diffexp"]["contrasts"],
+            log2fc = config["diffexp"]["log2FC"],
+            pvalue = config["diffexp"]["pval"]),
+        expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_log2fc{log2FC}_pval{pvalue}.pdf", contrast = config["diffexp"]["contrasts"],
+            log2fc = config["diffexp"]["log2FC"],
+            pvalue = config["diffexp"]["pval"]),
+        expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xls", contrast = config["diffexp"]["contrasts"],
+            log2fc = config["diffexp"]["log2FC"],
+            pvalue = config["diffexp"]["pval"])
 
-
+"results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_genes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv"
 #load the rules 
 include: "workflow/rules/dag.smk"
 include: "workflow/rules/trimming.smk"
