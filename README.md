@@ -12,13 +12,15 @@ Snakemake pipeline for Transposable Elements quantification and Differential Exp
 - STAR
 - bedtools 
 - R
+- samtools 
+- 
+
+### How to run
+
+Working on the container to use the pipeline...
 
 ##### Author
 Davide Bressan - Fulvio Chiacchiera Lab
-
-##### Rule graph
-
-
 
 ##### Disclaimer
 Some parts of the code where taken from the amazing work of Daniel Fernandez Perez. Specifically, from his repository: [Rna-seq pipeline](https://github.com/dfernandezperez/RNAseq-Snakemake)
