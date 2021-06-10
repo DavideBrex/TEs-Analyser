@@ -1,4 +1,4 @@
-<img align="right" src="https://user-images.githubusercontent.com/48018596/119865582-1c511f00-bf1c-11eb-9f89-22165532cd4a.png">
+<img align="right" src="https://raw.githubusercontent.com/DavideBrex/TEs-Analyser/67e1b375aebb02d3a3cc4a8da651d7a698b85c3c/rulegraph_2.svg">
 
 
 # TEs-Analyser
@@ -12,13 +12,15 @@ Snakemake pipeline for Transposable Elements quantification and Differential Exp
 - STAR
 - bedtools 
 - R
+- samtools 
+- 
+
+### How to run
+
+Working on the container to use the pipeline...
 
 ##### Author
 Davide Bressan - Fulvio Chiacchiera Lab
-
-##### Rule graph
-
-
 
 ##### Disclaimer
 Some parts of the code where taken from the amazing work of Daniel Fernandez Perez. Specifically, from his repository: [Rna-seq pipeline](https://github.com/dfernandezperez/RNAseq-Snakemake)
