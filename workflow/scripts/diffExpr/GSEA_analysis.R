@@ -9,7 +9,7 @@ suppressPackageStartupMessages(library(clusterProfiler))
 suppressPackageStartupMessages(library(ReactomePA))
 suppressPackageStartupMessages(library(org.Mm.eg.db))
 suppressPackageStartupMessages(library(openxlsx))
-
+suppressPackageStartupMessages(library(org.Hs.eg.db))
 source("workflow/scripts/general_functions.R")
 
 

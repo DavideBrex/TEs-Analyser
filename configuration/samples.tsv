@@ -5,3 +5,7 @@ UNT-RNA-rep3	Control
 TAM-RNA-rep1	Treatment
 TAM-RNA-rep2	Treatment
 TAM-RNA-rep3	Treatment
+HCT116-WT-1	WT-hct116
+HCT116-WT-2	WT-hct116
+HCT116-A1AKO-MM-1	KO-hct116
+HCT116-A1AKO-MM-2	KO-hct116

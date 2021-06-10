@@ -4,6 +4,9 @@ import yaml
 from snakemake.utils import validate, min_version
 import snakemake
 
+
+#to run when you add new samples: snakemake -n -R `snakemake --list-input-changes`
+
 ##### set minimum snakemake version #####
 min_version("5.4.3")
 

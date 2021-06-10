@@ -28,12 +28,12 @@ params:
 
 # input files required by the pipeline:
 ref:
-  genome: "mouse"
-  genome_index: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/mouse_reference_files_GRCm38_p6"
-  pseudo_genome_index: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/STAR_index_TE_pseudogenome"
+  genome: "human" #"mouse"
+  genome_index: "/shares/CIBIO-Storage/CIBIO/sharedLC/human_genome/human_star_index"   #"/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/mouse_reference_files_GRCm38_p6"
+  pseudo_genome_index: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/TE_pseudogenome_human_hg38/STAR_index_TE_pseudogenome_human" #"/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/STAR_index_TE_pseudogenome"
 
-  gtf_file: "/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/gencode.vM25.annotation.gtf"
-  gtf_file_TEs: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/new_TE_gtf_file.gtf"
+  gtf_file: "/shares/CIBIO-Storage/CIBIO/sharedLC/human_genome/gencode.v36.annotation.GRCh38.p13.gtf" #"/shares/CIBIO-Storage/CIBIO/sharedLC/mouse_genome/gencode.vM25.annotation.gtf"
+  gtf_file_TEs: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/TE_pseudogenome_human_hg38/new_hg38_TE_pseudo_gtf.gtf"  #"/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/TE_pseudo_genome/new_TE_gtf_file.gtf"
 
 dropseq_jar: "/home/davide.bressan-1/tools/Drop-seq_tools-2.4.0/jar/dropseq.jar"
 
@@ -45,12 +45,14 @@ diffexp:
     - 0.05
   log2FC: 
     - 1.5
-    - 1
   # contrasts for the deseq2 results method
   contrasts:
     Treatment-vs-Control:
       - Treatment
       - Control
+    KO-hct116-vs-WT-hct116:
+      - KO-hct116
+      - WT-hct116
 
 
 # for each tool set the number of threads
@@ -58,8 +60,8 @@ diffexp:
 tools_cpu:
   fastp_pe: 5
   fastp_se: 5
-  STAR_first_pass: 10
-  STAR_second_pass: 10
-  samtools_sort: 7
+  STAR_first_pass: 5 #10
+  STAR_second_pass: 5 #10
+  samtools_sort: 5
 
 
