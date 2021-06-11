@@ -8,6 +8,7 @@ sink(log, type = "message")
 # which coulmn to pick for each sample count matrix (see config.yaml for an explanation)
 column_to_pick <- snakemake@params[["col_to_pick"]]
 
+message("Reading the tables...\n")
 #read all the files
 datalist = lapply(snakemake@input, function(x){
     df <- read.table(file=x,header=F, sep = '\t')
@@ -17,8 +18,11 @@ datalist = lapply(snakemake@input, function(x){
     return(df)
 })
 
+message("Merging the tables...\n")
 #merge the tables
 final_tab <- Reduce(function(x,y) {merge(x,y, by= 'Gene_id')}, datalist)
 
 #store the result
 write.table( final_tab, file=snakemake@output[[1]], sep = "\t", quote = F, row.names = F )
+
+message("All done!\n")

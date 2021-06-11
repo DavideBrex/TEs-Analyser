@@ -16,10 +16,12 @@ params:
     pe: "-t 1 -A -Q -L" 
   star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 30 --outFilterMismatchNmax 999" 
   star_second_pass: "--outFilterMultimapNmax 30 --outFilterMismatchNmax 999"
+
   #HTseqcount outputs 3 columns per sample. 
   #col 1: unstranded
   #col 2: first read of a pair has to map to the same strand as the gene, and the second read has to map on the opposite strand 
   #col 3: reverse of line above
+
   htseq_count_column: 3
   drop_seq_strand: false    #whether to use strand info for tagging the bam files or not.
   bam_filtering_json: "./workflow/scripts/filtering_settings_TEs.json"
@@ -47,13 +49,9 @@ diffexp:
     - 1.5
   # contrasts for the deseq2 results method
   contrasts:
-    Treatment-vs-Control:
-      - Treatment
-      - Control
-    KO-hct116-vs-WT-hct116:
-      - KO-hct116
-      - WT-hct116
-
+    A1AKO-vs-A1AWT:
+      - A1AKO
+      - A1AWT
 
 # for each tool set the number of threads
 

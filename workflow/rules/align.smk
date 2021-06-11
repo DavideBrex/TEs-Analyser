@@ -26,9 +26,9 @@ rule align_first_pass:
         --readFilesCommand zcat \
         --outSAMtype BAM SortedByCoordinate \
         --outSAMattributes NH HI AS NM MD  \
-	--outFileNamePrefix {params.out_dir} \
+	    --outFileNamePrefix {params.out_dir} \
         {params.star_par} 2> {log.align}
-	mv {params.out_dir}Aligned.sortedByCoord.out.bam {output.bam}
+	    mv {params.out_dir}Aligned.sortedByCoord.out.bam {output.bam}
         samtools index {output.bam} 2>> {log.align}
         """
 
