@@ -11,8 +11,8 @@ rule align_first_pass:
     params:
         genome_index = config["ref"]["genome_index"],
         star_par = config["params"]["star_first_pass"],
-	out_dir = "results/alignments/{sample}/",
-	samtools_cpus = config["tools_cpu"]["samtools_sort"]
+	    out_dir = "results/alignments/{sample}/",
+	    samtools_cpus = config["tools_cpu"]["samtools_sort"]
     message:
         "First-pass alignment on the reference genome for: {input}"
     log:
@@ -43,7 +43,7 @@ rule align_second_pass:
     params:
         pseudo_genome_index = config["ref"]["pseudo_genome_index"],
         star_par = config["params"]["star_second_pass"],
-	out_dir = "results/alignments/{sample}-filtered/"
+	    out_dir = "results/alignments/{sample}-filtered/"
     message:
         "Second-pass alignment on the reference genome for: {input}"
     log:
@@ -101,3 +101,20 @@ rule TEs_counting:
         "results/logs/TEs_counting.log"
     script:
         "../scripts/quantify_TEs_expression.R" 
+
+
+
+#create bigwig files
+rule create_bigwigs:
+    input: rules.align_first_pass.output.bam
+    output: 
+        bw= "results/bigWigs/{sample}.bw"
+    params:
+        num_cpu = config["tools_cpu"]["bamCoverage"],
+        bamCoverage_params = config["params"]["bamCoverage"]
+    log:
+        bamcov = "results/logs/bigWigs/{sample}.log"
+    shell:
+        """ 
+        bamCoverage -b {input} {params.bamCoverage_params} -p {params.num_cpu} -o {output.bw} 2> {log.bamcov}
+        """ 

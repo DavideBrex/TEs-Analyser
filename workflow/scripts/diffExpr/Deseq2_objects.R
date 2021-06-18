@@ -1,13 +1,13 @@
+#set log file
+log <- file(snakemake@log[[1]], open = "wt")
+sink(log)
+sink(log, type = "message")
+
 message("Loading libraries...\n")
 suppressPackageStartupMessages(require(tidyverse))
 suppressPackageStartupMessages(require(IRanges))
 suppressPackageStartupMessages(require(dplyr))
 suppressPackageStartupMessages(require(DESeq2))
-
-#set log file
-log <- file(snakemake@log[[1]], open = "wt")
-sink(log)
-sink(log, type = "message")
 
 
 #read the sample information

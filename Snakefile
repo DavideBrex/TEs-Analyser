@@ -42,6 +42,7 @@ rule all:
         Gene_expression,
         TEs_expression,
         Gene_TEs_expression,
+        expand("results/bigWigs/{sample}.bw", sample = SAMPLES),
         expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_genes_diffexp_log2fc{log2FC}_pval{pvalue}.tsv", contrast = config["diffexp"]["contrasts"],
             log2FC = config["diffexp"]["log2FC"],
             pvalue = config["diffexp"]["pval"]),

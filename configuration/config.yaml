@@ -23,9 +23,15 @@ params:
   #col 3: reverse of line above
 
   htseq_count_column: 3
+  
   drop_seq_strand: false    #whether to use strand info for tagging the bam files or not.
+
+  #script with the filtering options for removing reads mapping on coding genes
   bam_filtering_json: "./workflow/scripts/filtering_settings_TEs.json"
+  
   summariseOverlap: 
+  
+  bamCoverage: "-bs 1 --normalizeUsing CPM"  #bin size of 1
   
 
 # input files required by the pipeline:
@@ -52,7 +58,9 @@ diffexp:
     A1AKO-vs-A1AWT:
       - A1AKO
       - A1AWT
-
+    TP53arid1aDKO-vs-TP53KO:
+      - TP53arid1aDKO
+      - TP53KO
 # for each tool set the number of threads
 
 tools_cpu:
@@ -61,5 +69,6 @@ tools_cpu:
   STAR_first_pass: 5 #10
   STAR_second_pass: 5 #10
   samtools_sort: 5
+  bamCoverage: 5
 
 

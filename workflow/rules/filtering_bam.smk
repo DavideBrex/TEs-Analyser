@@ -19,7 +19,7 @@ rule tag_bam_file:
         TagReadWithGeneFunction I={input} \
         O={output} \
         ANNOTATIONS_FILE={params.gtf_file} \
-        USE_STRAND_INFO={params.dropseq_use_strand}
+        USE_STRAND_INFO={params.dropseq_use_strand} 2> {log}
         """
 
 # select multimappers reads and intronic + intergenics reads 
@@ -38,7 +38,7 @@ rule filter_bam_file:
         """
         bamtools filter -in {input} \
         -script {params.filtering_json} \
-        -out {output}
+        -out {output} 2> {log}
         """
 
 
