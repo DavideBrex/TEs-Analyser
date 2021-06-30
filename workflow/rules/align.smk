@@ -33,6 +33,7 @@ rule align_first_pass:
         """
 
 # align against the TEs reference pseudo-genome
+# here the SJ detection is disabled
 rule align_second_pass:
     input: get_modified_fq
     output: 

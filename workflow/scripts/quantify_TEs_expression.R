@@ -1,4 +1,3 @@
-
 #set log file
 log <- file(snakemake@log[[1]], open = "wt")
 sink(log)

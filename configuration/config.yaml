@@ -14,8 +14,8 @@ params:
   fastp:
     se: "-t 1 -A -Q -L"
     pe: "-t 1 -A -Q -L" 
-  star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 30 --outFilterMismatchNmax 999" 
-  star_second_pass: "--outFilterMultimapNmax 30 --outFilterMismatchNmax 999"
+  star_first_pass: "--outSAMunmapped Within --outFilterType BySJout --outFilterMultimapNmax 100 --outFilterMismatchNmax 999 --outMultimappedOrder Random" 
+  star_second_pass: "--outFilterMultimapNmax 30 --outFilterMismatchNmax 999 --outMultimappedOrder Random"
 
   #HTseqcount outputs 3 columns per sample. 
   #col 1: unstranded

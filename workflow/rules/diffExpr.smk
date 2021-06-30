@@ -65,7 +65,7 @@ rule volcano:
     output:
         volcano_genes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_log2fc{log2FC}_pval{pvalue}.pdf",
         volcano_tes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_tes_log2fc{log2FC}_pval{pvalue}.pdf",
-        volcano_genes_tes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_tes_log2fc{log2FC}_pval{pvalue}.pdf"
+        volcano_genes_tes = "results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_volcano_genes_tes_log2fc{log2FC}_pval{pvalue}.pdf",
         ma_plot_TEs="results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_MA_plot_tes_log2fc{log2FC}.pdf"
     params:
         pvalue   = lambda w: w.pvalue,
