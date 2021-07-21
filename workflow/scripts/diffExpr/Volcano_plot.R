@@ -7,6 +7,7 @@ sink(log, type = "message")
 suppressPackageStartupMessages(require(dplyr))
 suppressPackageStartupMessages(require(ggplot2))
 suppressPackageStartupMessages(require(ggrepel))
+suppressPackageStartupMessages(require(tidyverse))
 
 
 #read tables

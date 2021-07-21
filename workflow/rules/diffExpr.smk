@@ -70,7 +70,7 @@ rule volcano:
     params:
         pvalue   = lambda w: w.pvalue,
         log2FC   = lambda w: w.log2FC,
-        contrast = lambda w: w.contrast
+        contrast = lambda w: w.contrast,
         organism = config["ref"]["genome"]
     log:
         "results/logs/deseq2/{contrast}.pval_{pvalue}.log2fc_{log2FC}.volcano.log"

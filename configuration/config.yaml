@@ -31,7 +31,7 @@ params:
   
   summariseOverlap: 
   
-  bamCoverage: "-bs 1 --normalizeUsing CPM"  #bin size of 1
+  bamCoverage: "-bs 1 --normalizeUsing CPM"  #create bigwis settings. bin size = 1
   
 
 # input files required by the pipeline:
