@@ -34,6 +34,10 @@ gtf_file <- distinct(gtf_file) #select only one gene-id:gene_name tuple
 
 #replace the gene name
 final_tab$Gene_id <- gtf_file[match(final_tab$Gene_id, gtf_file$gene_id),"gene_name"]
+
+#we sum the rows for those genes that are duplicated (same gene name but different ensembl id)
+final_tab <- aggregate(final_tab[,-1], list(Gene_id=final_tab[,1]), FUN = sum)
+
 message("Storing the table...\n")  
 #store the gene count table
 write.table( final_tab, file=snakemake@output[[1]], sep = "\t", quote = F, row.names = F )

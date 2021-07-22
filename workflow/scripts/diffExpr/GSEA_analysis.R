@@ -37,14 +37,14 @@ UP <- table_genes %>%
   dplyr::select(Geneid) %>% 
   pull %>%
   { gsub("\\..*","", .)} %>%
-  bitr(fromType = "ENSEMBL",toType = c("ENTREZID"), OrgDb = db)
+  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = db) #for ensembl set fromType = ENSEMBL
 
 DWN <- table_genes %>%  
   dplyr::filter(DEG == "Downregulated") %>% 
   dplyr::select(Geneid) %>% 
   pull %>%
   { gsub("\\..*","",.)} %>%
-  bitr(fromType = "ENSEMBL",toType = c("ENTREZID"), OrgDb = db)
+  bitr(fromType = "SYMBOL",toType = c("ENTREZID"), OrgDb = db) #for ensembl set fromType = ENSEMBL
 
 
 #perform analysis

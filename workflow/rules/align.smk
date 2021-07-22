@@ -81,7 +81,8 @@ rule merge_count_tables:
     output: 
         "results/expression_tabs/Gene_expression_counts.txt"
     params:
-        col_to_pick=config["params"]["htseq_count_column"]
+        col_to_pick=config["params"]["htseq_count_column"],
+        gtf_file=config["ref"]["gtf_file"]
     log:
         "results/logs/merging_tabs.log"
     script:
