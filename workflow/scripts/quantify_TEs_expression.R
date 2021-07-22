@@ -23,7 +23,7 @@ gtf_file_TE <- import(snakemake@params[["gtf_TEs"]])
 #collapse all the regions from the same id
 list_TE_is <- split(gtf_file_TE, gtf_file_TE$gene_id)
 
-list_bams <- BamFileList(bamfiles)
+list_bams <- BamFileList(bamfiles,yieldSize=1000000) #yieldSize splits the bam files in chuncks to reduce RAM
 
 #count reads on TEs
 message("Counting the reads mapped on the TEs...\n")
