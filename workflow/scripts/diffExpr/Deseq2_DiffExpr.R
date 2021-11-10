@@ -19,14 +19,12 @@ contrast <- paste("condition_", snakemake@params[["contrast"]][1], "_vs_", snake
 #load the deseq2 objects
 for (i in 1:3){
   dds <- readRDS(snakemake@input[[i]])
-  
   # Set as reference for the GLM model the sample that is going to act as a control in the contrast
   dds$condition <- relevel(dds$condition, snakemake@params[["contrast"]][2])
   dds <- nbinomWaldTest(dds)
   
   # Apply IHW to weight p-values based on baseMean: https://bioconductor.org/packages/release/bioc/vignettes/IHW/inst/doc/introduction_to_ihw.html
   res <- results(dds, name = contrast, filterFun = ihw, alpha = 0.05)
-  
   #shrink fold changes for low expression genes
   res <- lfcShrink(dds = dds, coef = contrast, res = res, type = "apeglm")
 

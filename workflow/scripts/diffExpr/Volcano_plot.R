@@ -69,10 +69,10 @@ volcano_genes_tes <- plot_volcano_fun(table_genes_tes,
 # function to create the MA plots for genes and TEs
 
 #read the table which tells you for each TE its family
-if (snakemake@params[["organims"]] == "human"){
-  families <- read.table("resources/TEs_per_family_hg38.txt", sep = "\t", col.names = c("TE","Family"))
-} else if (snakemake@params[["organims"]] == "mouse"){
-  families <- read.table("resources/TEs_per_family_mm10.txt", sep = "\t", col.names = c("TE","Family"))
+if (snakemake@params[["organism"]] == "human"){
+  families <- read.table("./resources/TEs_per_family_hg38.txt", sep = "\t", col.names = c("TE","Family"))
+} else if (snakemake@params[["organism"]] == "mouse"){
+  families <- read.table("./resources/TEs_per_family_mm10.txt", sep = "\t", col.names = c("TE","Family"))
 }
 
 #########################################################################

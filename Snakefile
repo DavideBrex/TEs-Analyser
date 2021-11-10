@@ -11,7 +11,7 @@ import snakemake
 min_version("5.4.3")
 
 ##### Singularity image path
-singularity: "/shares/CIBIO-Storage/CIBIO/sharedLC/singularity_containers/rnaseq-snakemake.simg"
+singularity: "/shares/CIBIO-Storage/GROUPS/sharedLC/Davide/containers/tes-analyser-cont.sif"
 
 ##### config file
 configfile: "configuration/config.yaml"
@@ -50,6 +50,9 @@ rule all:
             log2FC = config["diffexp"]["log2FC"],
             pvalue = config["diffexp"]["pval"]),
         expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_enrichments_log2fc{log2FC}_pval{pvalue}.xlsx", contrast = config["diffexp"]["contrasts"],
+            log2FC = config["diffexp"]["log2FC"],
+            pvalue = config["diffexp"]["pval"]),
+        expand("results/deseq2/{contrast}/log2fc{log2FC}_pval{pvalue}/{contrast}_MA_plot_tes_log2fc{log2FC}.pdf", contrast = config["diffexp"]["contrasts"],
             log2FC = config["diffexp"]["log2FC"],
             pvalue = config["diffexp"]["pval"])
 
