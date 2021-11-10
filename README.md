@@ -1,4 +1,4 @@
-<img align="right" src="https://raw.githubusercontent.com/DavideBrex/TEs-Analyser/67e1b375aebb02d3a3cc4a8da651d7a698b85c3c/rulegraph_2.svg">
+<img align="right" src="https://raw.githubusercontent.com/DavideBrex/TEs-Analyser/67e1b375aebb02d3a3cc4a8da651d7a698b85c3c/rulegraph.svg">
 
 
 # TEs-Analyser
