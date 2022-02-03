@@ -58,7 +58,7 @@ rule bam_to_fastq:
         "Converting the filtered bam file {input} to fastq..."
     shell:
         """
-        samtools sort -n -T {params}.tmp -@ {threads} {input} \
-        | bedtools bamtofastq -i stdin -fq /dev/stdout \
+        samtools sort -n -T {params}.tmp -@ {threads} {input} -o {params}.bam \
+        | bedtools bamtofastq -i {params}.bam -fq /dev/stdout \
         | gzip -c > {output} 
         """
