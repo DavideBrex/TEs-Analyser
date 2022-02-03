@@ -59,6 +59,6 @@ rule bam_to_fastq:
     shell:
         """
         samtools sort -n -T {params}.tmp -@ {threads} {input} -o {params}.bam \
-        | bedtools bamtofastq -i {params}.bam -fq /dev/stdout \
-        | gzip -c > {output} 
+        && bedtools bamtofastq -i {params}.bam -fq /dev/stdout \
+        | gzip -c > {output} && rm {params}.bam 2> {log}
         """
