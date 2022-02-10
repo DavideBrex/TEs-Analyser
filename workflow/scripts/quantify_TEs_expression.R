@@ -54,6 +54,14 @@ if ( file.exists(snakemake@input[["gene_count_expression"]])){
         #and now we can merge the gene and TEs expression count tables
         gene_counts <- gene_counts %>% rownames_to_column(var = "Gene_TE_id")
         colnames(tab_final_TE)[1] <- "Gene_TE_id"
+       
+        #make sure there are no two times the same ids in the two tables (genes and TEs)
+        if (any(gene_counts$Gene_TE_id %in% tab_final_TE$Gene_TE_id)){
+          common_tes_genes_ids <-  intersect(gene_counts$Gene_TE_id,tab_final_TE$Gene_TE_id)
+          #we add the information regarding whether the tes comes from genes or TEs table
+          gene_counts[gene_counts$Gene_TE_id %in% common_tes_genes_ids,"Gene_TE_id"] <-  paste0(gene_counts[gene_counts$Gene_TE_id %in% common_tes_genes_ids,"Gene_TE_id"], "_uniqueMap")
+        }
+        #bind
         TEs_genes_table <- rbind(gene_counts, as.data.frame(tab_final_TE))
         write.table(TEs_genes_table,file = snakemake@output[["gene_tes_expression_counts"]], quote = F, sep = "\t", row.names = F)
     } else{
