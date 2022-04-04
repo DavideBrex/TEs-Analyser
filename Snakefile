@@ -19,7 +19,7 @@ configfile: "configuration/config.yaml"
 #read samples info
 SAMPLES=pd.read_csv(config['samples'], sep = "\t").set_index("sample", drop=False).sort_index()
 #read fastq files
-FASTQ_FILES=pd.read_csv(config["fastq_files"], dtype=str, sep ="\t").set_index(["sample", "lane"], drop=False).sort_index()
+FASTQ_FILES=pd.read_csv(config["fastq_files"], dtype=str, sep ="\t", index_col = False).set_index(["sample", "lane"], drop=False).sort_index()
 
 SAMPLES = set(FASTQ_FILES["sample"])
 
