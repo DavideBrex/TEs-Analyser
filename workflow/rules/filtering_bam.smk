@@ -43,6 +43,11 @@ rule filter_bam_file:
 
 
 #convert bam files to fastq files
+# we add  awk to to the following:
+# since in the fastq file we would have multiple times the same read id (and mate), we keep 
+# only one read id (2 actually, because two mates) and remove all the other duplicated
+# in this way the resulting fastq is lighter and the re-alignemnts is faster. 
+
 rule bam_to_fastq:
     input:
         rules.filter_bam_file.output
@@ -58,7 +63,13 @@ rule bam_to_fastq:
         "Converting the filtered bam file {input} to fastq..."
     shell:
         """
-        samtools sort -n -T {params}.tmp -@ {threads} {input} -o {params}.bam \
-        && bedtools bamtofastq -i {params}.bam -fq /dev/stdout \
+        samtools sort -n -T {params}.tmp -@ {threads} {input} -o {params}.bam;
+
+        samtools view -H {params}.bam > {params}.tmp.bam \
+        && samtools view {params}.bam | awk '!_[$1,$10]++' >> {params}.tmp.bam \
+        && samtools view -b {params}.tmp.bam > {params}.bam && rm {params}.tmp.bam;     
+    
+
+        bedtools bamtofastq -i {params}.bam -fq /dev/stdout \
         | gzip -c > {output} && rm {params}.bam 2> {log}
-        """
+        """ 
